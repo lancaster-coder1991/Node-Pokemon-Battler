@@ -34,16 +34,35 @@ function Battle(trainer1, pokemon1, trainer2, pokemon2) {
 }
 
 Battle.prototype.fight = function () {
-  let pokemon = this.turn;
-  if (pokemon === this.pokemons.one) {
-    const attack1 = this.pokemons.one.attackDamage;
-    this.pokemons.two.hitPoints -= attack1;
-    this.turn = this.pokemons.two;
+  let attacker;
+  let defender;
+  // Assign attacker and defender
+  if (this.turn === this.pokemons.one) {
+    attacker = this.pokemons.one;
+    defender = this.pokemons.two;
   } else {
-    const attack2 = this.pokemons.two.attackDamage;
-    this.pokemons.one.hitPoints -= attack2;
-    this.turn = this.pokemons.one;
+    attacker = this.pokemons.two;
+    defender = this.pokemons.one;
   }
+  // Change turn
+  this.turn = defender;
+  // The attacker is weak against defender
+  if (attacker.weakness === defender.type) {
+    defender.hitPoints -= (attacker.attackDamage * 0.75).toFixed(0);
+
+    // The defender is weak against attacker
+  } else if (defender.weakness === attacker.type) {
+    defender.hitPoints -= (attacker.attackDamage * 1.25).toFixed(0);
+  } else {
+    // The defender is normal against attacker
+    defender.hitPoints -= attacker.attackDamage;
+  }
+  console.log(
+    `This turn ${attacker.name} attacked, now it is ${defender.name} turn!`
+  );
+  console.log(
+    `At the end of this turn ${defender.name} has ${defender.hitPoints} `
+  );
 };
 
 // Pokemon Methods
