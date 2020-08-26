@@ -21,6 +21,31 @@ function Trainer(name) {
   this.team = [];
 }
 
+function Battle(trainer1, pokemon1, trainer2, pokemon2) {
+  this.trainers = {
+    one: trainer1,
+    two: trainer2,
+  };
+  this.pokemons = {
+    one: pokemon1,
+    two: pokemon2,
+  };
+  this.turn = pokemon1;
+}
+
+Battle.prototype.fight = function () {
+  let pokemon = this.turn;
+  if (pokemon === this.pokemons.one) {
+    const attack1 = this.pokemons.one.attackDamage;
+    this.pokemons.two.hitPoints -= attack1;
+    this.turn = this.pokemons.two;
+  } else {
+    const attack2 = this.pokemons.two.attackDamage;
+    this.pokemons.one.hitPoints -= attack2;
+    this.turn = this.pokemons.one;
+  }
+};
+
 // Pokemon Methods
 Pokemon.prototype.talk = function () {
   return this.soundItMakes;
@@ -30,12 +55,12 @@ Pokemon.prototype.weakness = function () {
   switch (this.type) {
     case "normal":
       return "none";
-    case "Water":
-      return "Grass";
-    case "Fire":
-      return "Water";
-    case "Grass":
-      return "Fire";
+    case "water":
+      return "grass";
+    case "fire":
+      return "water";
+    case "grass":
+      return "fire";
   }
 };
 
@@ -48,4 +73,4 @@ Trainer.prototype.catch = function (pokemon) {
   this.team.push(pokemon);
 };
 
-module.exports = { Pokemon, Trainer };
+module.exports = { Pokemon, Trainer, Battle };

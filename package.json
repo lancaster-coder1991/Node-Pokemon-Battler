@@ -1,0 +1,23 @@
+{
+  "name": "fun-pokemon-battler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lancaster-coder1991/fun-pokemon-battler.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lancaster-coder1991/fun-pokemon-battler/issues"
+  },
+  "homepage": "https://github.com/lancaster-coder1991/fun-pokemon-battler#readme",
+  "devDependencies": {
+    "jest": "^26.4.2"
+  }
+}
