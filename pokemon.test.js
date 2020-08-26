@@ -79,25 +79,32 @@ describe("Game", () => {
         expect(match.trainers.one.team).toBe(george.team);
       });
       it("should have a property of 2 pokemons", () => {
-        expect(match.pokemons).toEqual({ one: pikachu, two: squirtle });
-        expect(match.pokemons.one).toBe(pikachu);
+        expect(match.pokemons).toEqual({ one: charmander, two: squirtle });
+        expect(match.pokemons.one).toBe(charmander);
       });
       it("should have a property of turn", () => {
-        expect(match.turn).toEqual(pikachu);
-        match.fight(pikachu);
+        expect(match.turn).toEqual(charmander);
+        match.fight();
         expect(match.turn).toEqual(squirtle);
       });
     });
     describe("Methods", () => {
       it("should have a fight method", () => {
         match.fight();
-        // expect(squirtle.hitPoints).toBe(119);
+        expect(squirtle.hitPoints).toBe(119);
+        expect(match.turn).toBe(squirtle);
         match.fight();
         match.fight();
         match.fight();
         match.fight();
         match.fight();
-        // expect(charmander.hitPoints).toBe(75);
+        match.fight();
+        match.fight();
+        match.fight();
+        match.fight();
+        match.fight();
+        match.fight();
+        match.fight();
       });
     });
   });

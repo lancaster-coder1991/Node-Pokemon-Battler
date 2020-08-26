@@ -19,5 +19,8 @@
   "homepage": "https://github.com/lancaster-coder1991/fun-pokemon-battler#readme",
   "devDependencies": {
     "jest": "^26.4.2"
+  },
+  "dependencies": {
+    "inquirer": "^7.3.3"
   }
 }

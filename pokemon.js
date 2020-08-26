@@ -31,11 +31,15 @@ function Battle(trainer1, pokemon1, trainer2, pokemon2) {
     two: pokemon2,
   };
   this.turn = pokemon1;
+  this.winner = 0;
 }
 
 Battle.prototype.fight = function () {
   let attacker;
   let defender;
+  if (this.winner !== 0) {
+    return console.log(`Match is finished, the winner is ${this.winner.name}`);
+  }
   // Assign attacker and defender
   if (this.turn === this.pokemons.one) {
     attacker = this.pokemons.one;
@@ -49,20 +53,37 @@ Battle.prototype.fight = function () {
   // The attacker is weak against defender
   if (attacker.weakness === defender.type) {
     defender.hitPoints -= (attacker.attackDamage * 0.75).toFixed(0);
-
+    //Attack = weak message
+    console.log(
+      `${attacker.name} is weak against ${defender.name} and deals >${(
+        attacker.attackDamage * 0.75
+      ).toFixed(0)}< damage.\n${defender.name} has >${
+        defender.hitPoints
+      }< hit points left.\nIt is ${defender.name}'s turn next.`
+    );
     // The defender is weak against attacker
   } else if (defender.weakness === attacker.type) {
     defender.hitPoints -= (attacker.attackDamage * 1.25).toFixed(0);
+    //Attack = strong message
+    console.log(
+      `${attacker.name} is strong against ${defender.name} and deals >${(
+        attacker.attackDamage * 1.25
+      ).toFixed(0)}< damage.\n${defender.name} has >${
+        defender.hitPoints
+      }< hit points left.\nIt is ${defender.name}'s turn next.`
+    );
   } else {
     // The defender is normal against attacker
     defender.hitPoints -= attacker.attackDamage;
+    //Attack = normal message
+    console.log(
+      `${attacker.name} deals >${attacker.attackDamage}< damage.\n${defender.name} has >${defender.hitPoints}< hit points left.\nIt is ${defender.name}'s turn next.`
+    );
   }
-  console.log(
-    `This turn ${attacker.name} attacked, now it is ${defender.name} turn!`
-  );
-  console.log(
-    `At the end of this turn ${defender.name} has ${defender.hitPoints} `
-  );
+  if (defender.hitPoints <= 0) {
+    this.winner = attacker;
+    console.log(`Match is finished, the winner is ${this.winner.name}`);
+  }
 };
 
 // Pokemon Methods
