@@ -1,85 +1,26 @@
-var inquirer = require("./lib/inquirer");
+const inquirer = require("./lib/inquirer");
+const { Pokemon, Trainer, Battle, pokemons, trainers } = require("./pokemon");
 
-console.log("Hi, welcome to Node Pizza");
-
-var questions = [
-  {
-    type: "confirm",
-    name: "toBeDelivered",
-    message: "Is this for delivery?",
-    default: false,
-  },
-  {
-    type: "input",
-    name: "phone",
-    message: "What's your phone number?",
-    default: false,
-  },
+const questions = [
   {
     type: "list",
-    name: "size",
-    message: "What size do you need?",
-    choices: ["Large", "Medium", "Small"],
-    filter: function (val) {
-      return val.toLowerCase();
-    },
+    name: "pokemon",
+    message: "Pick a Pokeball",
+    choices: ["Pikachu", "Bulbasaur", "Charmander", "Squirtle"],
   },
   {
     type: "input",
-    name: "quantity",
-    message: "How many do you need?",
-    validate: function (value) {
-      var valid = !isNaN(parseFloat(value));
-      return valid || "Please enter a number";
-    },
-    filter: Number,
-  },
-  {
-    type: "expand",
-    name: "toppings",
-    message: "What about the toppings?",
-    choices: [
-      {
-        key: "p",
-        name: "Pepperoni and cheese",
-        value: "PepperoniCheese",
-      },
-      {
-        key: "a",
-        name: "All dressed",
-        value: "alldressed",
-      },
-      {
-        key: "w",
-        name: "Hawaiian",
-        value: "hawaiian",
-      },
-    ],
-  },
-  {
-    type: "rawlist",
-    name: "beverage",
-    message: "You also get a free 2L beverage",
-    choices: ["Pepsi", "7up", "Coke"],
-  },
-  {
-    type: "input",
-    name: "comments",
-    message: "Any comments on your purchase experience?",
-    default: "Nope, all good!",
-  },
-  {
-    type: "list",
-    name: "prize",
-    message: "For leaving a comment, you get a freebie",
-    choices: ["cake", "fries"],
-    when: function (answers) {
-      return answers.comments !== "Nope, all good!";
-    },
+    name: "name",
+    message: "Choose a name",
   },
 ];
 
 inquirer.prompt(questions).then((answers) => {
-  console.log("\nOrder receipt:");
-  console.log(JSON.stringify(answers, null, "  "));
+  trainers.one = new Trainer(answers.name);
+  trainers.one.catch(answers.pokemon);
+  console.log(trainers.one);
+  console.log(trainers.one.team);
+  console.log("Pokemon picked");
+  console.log(JSON.stringify(pokemons[answers.pokemon.toLowerCase()]));
+  console.log(answers.name);
 });

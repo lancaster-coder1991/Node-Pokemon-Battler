@@ -118,4 +118,16 @@ class Battle {
   }
 }
 
-module.exports = { Pokemon, Trainer, Battle };
+const pokemons = {
+  pikachu: new Pokemon("Pikachu", 100, 20, "pika", "thundershock"),
+  bulbasaur: new Pokemon("Bulbasaur", 150, 30, "grrr", "tackle", "grass"),
+  squirtle: new Pokemon("Squirtle", 130, 25, "bark", "bubble", "water"),
+  charmander: new Pokemon("Charmander", 140, 15, "meow", "ember", "fire"),
+};
+
+const trainers = {
+  one: new Trainer("George"),
+  two: new Trainer("Riccardo"),
+};
+
+module.exports = { Pokemon, Trainer, Battle, pokemons, trainers };
