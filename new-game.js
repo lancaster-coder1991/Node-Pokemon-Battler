@@ -15,12 +15,32 @@ const questions = [
   },
 ];
 
+const battleQ = [
+  {
+    type: "list",
+    name: "turn",
+    message: "Pick a action",
+    choices: ["Attack", "Run", "Switch Pokemon"],
+  },
+];
+
 inquirer.prompt(questions).then((answers) => {
   trainers.one = new Trainer(answers.name);
-  trainers.one.catch(answers.pokemon);
-  console.log(trainers.one);
-  console.log(trainers.one.team);
-  console.log("Pokemon picked");
-  console.log(JSON.stringify(pokemons[answers.pokemon.toLowerCase()]));
-  console.log(answers.name);
+  trainers.one.catch(pokemons[answers.pokemon.toLowerCase()]);
+  // Battle
+  const battle = new Battle(trainers.one, trainers.two);
+  console.log(
+    `New battle started between ${trainers.one.name} and ${trainers.two.name}`
+  );
+  function actions() {
+    inquirer.prompt(battleQ).then((answers) => {
+      if (answers.turn === "Attack") {
+        battle.fight();
+        if (battle.winner === 0) {
+          actions();
+        }
+      }
+    });
+  }
+  actions();
 });

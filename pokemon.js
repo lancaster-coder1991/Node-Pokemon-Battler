@@ -50,16 +50,17 @@ class Trainer {
   }
 }
 class Battle {
-  constructor(trainer1, pokemon1, trainer2, pokemon2) {
+  constructor(trainer1, trainer2) {
     this.trainers = {
       one: trainer1,
       two: trainer2,
     };
     this.pokemons = {
-      one: pokemon1,
-      two: pokemon2,
+      one: trainer1.team[0],
+      two: trainer2.team[0],
     };
-    this.turn = pokemon1;
+    this.turn = this.pokemons.one;
+    this.notTurn = this.pokemons.two;
     this.winner = 0;
   }
 
@@ -79,41 +80,58 @@ class Battle {
       attacker = this.pokemons.two;
       defender = this.pokemons.one;
     }
-    // Change turn
-    this.turn = defender;
+
     // The attacker is weak against defender
     if (attacker.weakness === defender.type) {
       defender.hitPoints -= (attacker.attackDamage * 0.75).toFixed(0);
       //Attack = weak message
-      console.log(
-        `${attacker.name} is weak against ${defender.name} and deals >${(
-          attacker.attackDamage * 0.75
-        ).toFixed(0)}< damage.\n${defender.name} has >${
-          defender.hitPoints
-        }< hit points left.\nIt is ${defender.name}'s turn next.`
-      );
+
+      this.messages("weakMessage");
       // The defender is weak against attacker
     } else if (defender.weakness === attacker.type) {
       defender.hitPoints -= (attacker.attackDamage * 1.25).toFixed(0);
+
       //Attack = strong message
-      console.log(
-        `${attacker.name} is strong against ${defender.name} and deals >${(
-          attacker.attackDamage * 1.25
-        ).toFixed(0)}< damage.\n${defender.name} has >${
-          defender.hitPoints
-        }< hit points left.\nIt is ${defender.name}'s turn next.`
-      );
+      this.messages("strongMessage");
     } else {
       // The defender is normal against attacker
       defender.hitPoints -= attacker.attackDamage;
       //Attack = normal message
-      console.log(
-        `${attacker.name} deals >${attacker.attackDamage}< damage.\n${defender.name} has >${defender.hitPoints}< hit points left.\nIt is ${defender.name}'s turn next.`
-      );
+      this.messages("normalMessage");
     }
+    // Change turn
+    this.turn = defender;
+    this.notTurn = attacker;
+    // Game Over
     if (defender.hitPoints <= 0) {
       this.winner = attacker;
       console.log(`Match is finished, the winner is ${this.winner.name}`);
+    }
+  }
+
+  messages(msg) {
+    if (msg === "strongMessage") {
+      console.log(
+        `${this.turn.name} is strong against ${this.notTurn.name} and deals >${(
+          this.turn.attackDamage * 1.25
+        ).toFixed(0)}< damage.\n${this.notTurn.name} has >${
+          this.notTurn.hitPoints
+        }< hit points left.\nIt is ${this.notTurn.name}'s turn next.`
+      );
+    }
+    if (msg === "weakMessage") {
+      console.log(
+        `${this.turn.name} is weak against ${this.notTurn.name} and deals >${(
+          this.turn.attackDamage * 0.75
+        ).toFixed(0)}< damage.\n${this.notTurn.name} has >${
+          this.notTurn.hitPoints
+        }< hit points left.\nIt is ${this.notTurn.name}'s turn next.`
+      );
+    }
+    if (msg === "normalMessage") {
+      console.log(
+        `${this.turn.name} deals >${this.turn.attackDamage}< damage.\n${this.notTurn.name} has >${this.notTurn.hitPoints}< hit points left.\nIt is ${this.notTurn.name}'s turn next.`
+      );
     }
   }
 }
@@ -126,8 +144,9 @@ const pokemons = {
 };
 
 const trainers = {
-  one: new Trainer("George"),
-  two: new Trainer("Riccardo"),
+  one: new Trainer("Player 1"),
+  two: new Trainer("Blue"),
 };
+trainers.two.catch(pokemons.squirtle);
 
 module.exports = { Pokemon, Trainer, Battle, pokemons, trainers };

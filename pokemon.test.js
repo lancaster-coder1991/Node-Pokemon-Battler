@@ -93,18 +93,6 @@ describe("Game", () => {
         match.fight();
         expect(squirtle.hitPoints).toBe(119);
         expect(match.turn).toBe(squirtle);
-        match.fight();
-        match.fight();
-        match.fight();
-        match.fight();
-        match.fight();
-        match.fight();
-        match.fight();
-        match.fight();
-        match.fight();
-        match.fight();
-        match.fight();
-        match.fight();
       });
     });
   });
